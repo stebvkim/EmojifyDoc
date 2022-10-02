@@ -3,10 +3,14 @@ import os
 import pytesseract as pt
 from pdf2image import convert_from_path
 from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw 
+from pilmoji import Pilmoji
 
 # Need this to make Pytesseract run on my computer. Will differ for other users.
 pt.pytesseract.tesseract_cmd = r'C:\Users\steve\AppData\Local\Tesseract-OCR\tesseract.exe'
 
+################################## Helper Functions ##################################
 def pdf_to_pil_images(pdf_pathname: str) -> list:
     ''' Takes an input PDF and returns a list of PIL images. '''
 
@@ -43,10 +47,45 @@ def get_words_and_bounding_boxes(pil_image) -> dict:
 
     return formatted_words
 
+if __name__ == "__main__":
+    pass
+
+
+'''
+Input: PDF
+pdf_to_pil_images -> list of PIL images
+
+for img in PIL_images: 
+    img's words and bounding boxes from get_words_and_bounding_boxes
+    for word in that output:
+        if word.has_emoji:
+            for bounding box in output[word]:
+                white out bounding box
+                pilmoji insert emoji
+
+# the pil images should be directly modified by now?
+
+im_1.save(... from https://datatofish.com/images-to-pdf-python/) # save back to pdf
+
+web app?
+
+'''
+
 # print(convert_and_save_as_image('test_file_storage'))
 # print(convert_and_save_as_image('test_file_storage\page_0.jpg'))
 
-# images = pdf_to_pil_images('ps1.pdf')
+# sample code for ending: convert all pil images back to pdf
+images = pdf_to_pil_images('ps1.pdf')
+print(images)
+
+im1 = images[0]
+image_list = images[1:]
+
+print(im1)
+print(image_list)
+
+im1.save(os.path.join(os.getcwd(), "test_pdf.pdf"), save_all=True, append_images=image_list)
+
 # for im in images:
 #     print(get_words_and_bounding_boxes(im))
 #     break
