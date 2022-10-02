@@ -1,9 +1,4 @@
-import numpy as np
-import pandas as pd
 from emoji_translate.emoji_translate import Translator
-import time
-import spacy
-import regex
 import torchtext
 import torch
 
