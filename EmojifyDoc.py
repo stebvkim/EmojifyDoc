@@ -6,6 +6,7 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw 
 from pilmoji import Pilmoji
+from testing_dict import emojify
 
 PDF_HANDLE_INDEX_BACK = -3
 PDF_HANDLE_INDEX_FRONT = -4
