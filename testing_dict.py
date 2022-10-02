@@ -4,9 +4,9 @@ import torch
 
 def emojify(word):
     ignore_words = {'the', 'in', 'and', 'but', 'yet'}
-        # custom_emojis = {'a': '🅰️'}
+    custom_emojis = {'A': '🅰️', 'a': '🅰️'}
         # custom_emojis = {'a': '\U0001F170'}
-    emo = Translator(exact_match_only=False, randomize=True)
+    emo = Translator(exact_match_only=False, randomize=False)
 
     if word in ignore_words:
         return None
@@ -14,8 +14,8 @@ def emojify(word):
         emojified_word = emo.emojify(word)
         if emojified_word != word:
             return emojified_word
-        # elif word.lower() in custom_emojis.keys():
-        #     return custom_emojis[word]
+        elif word.lower() in custom_emojis.keys():
+            return custom_emojis[word]
         else:
             # most_similar = None
             # glove = torchtext.vocab.GloVe(name="6B",  # trained on Wikipedia 2014 corpus
