@@ -4,7 +4,8 @@ import torch
 
 def emojify(word):
     ignore_words = {'the', 'in', 'and', 'but', 'yet'}
-    custom_emojis = {'a': '🅰️'}
+        # custom_emojis = {'a': '🅰️'}
+        # custom_emojis = {'a': '\U0001F170'}
     emo = Translator(exact_match_only=False, randomize=True)
 
     if word in ignore_words:
@@ -13,22 +14,22 @@ def emojify(word):
         emojified_word = emo.emojify(word)
         if emojified_word != word:
             return emojified_word
-        elif word.lower() in custom_emojis.keys():
-            return custom_emojis[word]
+        # elif word.lower() in custom_emojis.keys():
+        #     return custom_emojis[word]
         else:
-            most_similar = None
-            glove = torchtext.vocab.GloVe(name="6B",  # trained on Wikipedia 2014 corpus
-                                          dim=100)  # embedding size = 50
+            # most_similar = None
+            # glove = torchtext.vocab.GloVe(name="6B",  # trained on Wikipedia 2014 corpus
+            #                               dim=100)  # embedding size = 50
 
-            vec = glove[word]
-            dists = torch.norm(glove.vectors - vec, dim=1)
-            lst = sorted(enumerate(dists.numpy()), key=lambda x: x[1])  # sort by distance
-            for idx, difference in lst[1:10 + 1]:  # take the top n
-                poss_emoji = emo.emojify(glove.itos[idx])
-                if glove.itos[idx] != poss_emoji:
-                    most_similar = poss_emoji
-            return most_similar
-
+            # vec = glove[word]
+            # dists = torch.norm(glove.vectors - vec, dim=1)
+            # lst = sorted(enumerate(dists.numpy()), key=lambda x: x[1])  # sort by distance
+            # for idx, difference in lst[1:10 + 1]:  # take the top n
+            #     poss_emoji = emo.emojify(glove.itos[idx])
+            #     if glove.itos[idx] != poss_emoji:
+            #         most_similar = poss_emoji
+            # return most_similar
+            return None
 
 def main():
     # # test = 'i love chicken. What the fuck is guacamole. avocado and avocados'

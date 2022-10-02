@@ -64,7 +64,7 @@ def emojify_text(img, xy: tuple, unicode: str):
     '''
     (x0, y0, x1, y1) = xy
     area = [(x0, y0), (x1, y1)]
-    emoji_location = ((x1 + x0)/2 - (y1 - y0)/2, y0)    # point to center emoji 
+    emoji_location = (int((x1 + x0)/2 - (y1 - y0)/2), int(y0))    # point to center emoji 
 
     boundary_box = Image.new("RGB", (x1 - x0, y1 - y0), (255, 255, 255))
     img.paste(boundary_box, (x0, y0))
@@ -100,13 +100,16 @@ if __name__ == "__main__":
     final_pil_images = []
 
     for img in pil_images:
-        final_pil_images.append(img)
-        # page_info = get_words_and_bounding_boxes(img)
-        # final_pil_images.append(check_emojify(page_info))
+        # final_pil_images.append(img)
+        page_info = get_words_and_bounding_boxes(img)
+        final_pil_images.append(check_emojify(page_info, img))
 
     page_one = final_pil_images[0]
-    other_pages = final_pil_images[1:]
 
-    file_name = os.path.basename(input_pdf_path)
+    if len(final_pil_images) > 1:
+        other_pages = final_pil_images[1:]
+        file_name = os.path.basename(input_pdf_path)
+        page_one.save(os.path.join(os.path.join(os.getcwd(), 'emojified_pdfs'), f'{file_name[:PDF_HANDLE_INDEX_FRONT]}_emojified.pdf'), save_all=True, append_images=other_pages)
 
-    page_one.save(os.path.join(os.getcwd(), f'{file_name[:PDF_HANDLE_INDEX_FRONT]}_emojified.pdf'), save_all=True, append_images=other_pages)
+    else:
+        page_one.save(os.path.join(os.path.join(os.getcwd(), 'emojified_pdfs'), f'{file_name[:PDF_HANDLE_INDEX_FRONT]}_emojified.pdf'))
