@@ -1,4 +1,4 @@
-# to be implemented.
+import argparse
 import os
 import pytesseract as pt
 from pdf2image import convert_from_path
@@ -6,6 +6,12 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw 
 from pilmoji import Pilmoji
+
+PDF_HANDLE_INDEX_BACK = -3
+PDF_HANDLE_INDEX_FRONT = -4
+
+parser = argparse.ArgumentParser(description='Run EmojifyDoc.')
+parser.add_argument('--path', type=str, required=True)
 
 # Need this to make Pytesseract run on my computer. Will differ for other users.
 pt.pytesseract.tesseract_cmd = r'C:\Users\steve\AppData\Local\Tesseract-OCR\tesseract.exe'
@@ -16,8 +22,7 @@ def pdf_to_pil_images(pdf_pathname: str) -> list:
 
     # Make sure we get valid inputs
     assert os.path.exists(pdf_pathname), "File does not exist."
-    PDF_HANDLE_INDEX = -3
-    assert pdf_pathname[PDF_HANDLE_INDEX:].lower() == 'pdf', "File is not a PDF."
+    assert pdf_pathname[PDF_HANDLE_INDEX_BACK:].lower() == 'pdf', "File is not a PDF."
 
     individual_images = convert_from_path(pdf_pathname)
     im_paths = []
@@ -48,8 +53,24 @@ def get_words_and_bounding_boxes(pil_image) -> dict:
     return formatted_words
 
 if __name__ == "__main__":
-    pass
 
+    args = parser.parse_args()
+    input_pdf_path = args.path
+
+    pil_images = pdf_to_pil_images(input_pdf_path)
+    final_pil_images = []
+
+    for img in pil_images:
+        final_pil_images.append(img)
+        # page_info = get_words_and_bounding_boxes(img)
+        # final_pil_images.append(check_emojify(page_info))
+
+    page_one = final_pil_images[0]
+    other_pages = final_pil_images[1:]
+
+    file_name = os.path.basename(input_pdf_path)
+
+    page_one.save(os.path.join(os.getcwd(), f'{file_name[:PDF_HANDLE_INDEX_FRONT]}_emojified.pdf'), save_all=True, append_images=other_pages)
 
 '''
 Input: PDF
@@ -71,21 +92,4 @@ web app?
 
 '''
 
-# print(convert_and_save_as_image('test_file_storage'))
-# print(convert_and_save_as_image('test_file_storage\page_0.jpg'))
-
-# sample code for ending: convert all pil images back to pdf
-images = pdf_to_pil_images('ps1.pdf')
-print(images)
-
-im1 = images[0]
-image_list = images[1:]
-
-print(im1)
-print(image_list)
-
-im1.save(os.path.join(os.getcwd(), "test_pdf.pdf"), save_all=True, append_images=image_list)
-
-# for im in images:
-#     print(get_words_and_bounding_boxes(im))
-#     break
+# print(get_words_and_bounding_boxes(pdf_to_pil_images(r'assets\sample_fable.pdf')[0]))
