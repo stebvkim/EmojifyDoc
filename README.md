@@ -20,7 +20,7 @@ Instructions:
 python EmojifyDoc.py --path path_to_pdf (--glove True/False, optional and default False)
 
 
-**Run run_glove_file.py first to download everything necessary to utilize GloVe. Otherwise, the default emoji suggestion is used. Note that using GloVe may drastically increase the runtime for less powerful computers.**
+**Run create_glove_file.py first to download everything necessary to utilize GloVe. Otherwise, the default emoji suggestion is used. Note that using GloVe may drastically increase the runtime for less powerful computers.**
 
 ### How EmojifyDoc works: 
 
