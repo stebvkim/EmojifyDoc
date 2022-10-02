@@ -17,12 +17,12 @@ Instructions:
 python EmojifyDoc.py --path path_to_pdf (--glove True/False, optional and default False)
 
 
-**Run run_glove_file.py first to download everything necessary to utilize GloVe. Otherwise, the default emoji suggestion is used. Note that this may drastically increase the runtime for less powerful computers.**
+**Run run_glove_file.py first to download everything necessary to utilize GloVe. Otherwise, the default emoji suggestion is used. Note that using GloVe may drastically increase the runtime for less powerful computers.**
 
 ### How EmojifyDoc works: 
 
-We use *pdf2image* to split the input PDF into individual JPG images. We then run Pytesseract (OCR) on each image to get words along with their bounding boxes. These words are then converted to emojis if an appropriate emoji can be found. When a relevant emoji is being found, we first try the emoji_translate package to see if it already has a matching emoji. Then, we check a dictionary of pre-determined pairings that were created by hand. Finally, we use GloVe word embeddings to get similar words and try to use the emoji_translate package again on them. If there is a word on the image that can be expressed as an emoji, we white out that bounding box and place a relevant emoji there instead. 
+We use pdf2image to split the input PDF into individual JPG images. We then run Pytesseract (OCR) on each image to get words along with their bounding boxes. These words are then converted to emojis if an appropriate emoji can be found. In the process of finding a relevant emoji, we first try the emoji_translate package to see if it already has a matching emoji. Then, we check a dictionary of pre-determined pairings that we curated by hand. Finally, we use GloVe word embeddings to get similar words and try to use the emoji_translate package again on them. If there is a word on the image that can be expressed as an emoji, we white out that bounding box and place a relevant emoji there instead. 
 
-Note that some emojis show up as boxes. This is likely due to something funky with Unicode. Also note that when a word can be represented through multiple emojis, EmojifyDoc will randomly select one.
+Note that some emojis show up as boxes. That is funky. Also note that when a word can be represented through multiple emojis, EmojifyDoc will randomly select one. This is not perfect, nor did we intend it to be. In a way, it adds onto the fun 😀.
 
 Enjoy!
