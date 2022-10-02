@@ -5,10 +5,10 @@
 Want to spice up your PDFs? EmojifyDoc is the perfect solution for you! 
 
 Input Document: 
-*insert image here*
+![Input Document](assets/sample_fable_image.jpg?raw=true "Title")
 
 Output Document:
-*insert image here*
+![Output Document](assets/sample_fable_emojified_image.jpg?raw=true "Title")
 
 
 ___
