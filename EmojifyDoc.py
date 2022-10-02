@@ -71,25 +71,3 @@ if __name__ == "__main__":
     file_name = os.path.basename(input_pdf_path)
 
     page_one.save(os.path.join(os.getcwd(), f'{file_name[:PDF_HANDLE_INDEX_FRONT]}_emojified.pdf'), save_all=True, append_images=other_pages)
-
-'''
-Input: PDF
-pdf_to_pil_images -> list of PIL images
-
-for img in PIL_images: 
-    img's words and bounding boxes from get_words_and_bounding_boxes
-    for word in that output:
-        if word.has_emoji:
-            for bounding box in output[word]:
-                white out bounding box
-                pilmoji insert emoji
-
-# the pil images should be directly modified by now?
-
-im_1.save(... from https://datatofish.com/images-to-pdf-python/) # save back to pdf
-
-web app?
-
-'''
-
-# print(get_words_and_bounding_boxes(pdf_to_pil_images(r'assets\sample_fable.pdf')[0]))
