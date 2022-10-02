@@ -13,6 +13,7 @@ PDF_HANDLE_INDEX_FRONT = -4
 
 parser = argparse.ArgumentParser(description='Run EmojifyDoc.')
 parser.add_argument('--path', type=str, required=True)
+parser.add_argument('--glove', nargs='?', const=False, type=bool, default=False)
 
 # Need this to make Pytesseract run on my computer. Will differ for other users.
 pt.pytesseract.tesseract_cmd = r'C:\Users\steve\AppData\Local\Tesseract-OCR\tesseract.exe'
@@ -75,7 +76,7 @@ def emojify_text(img, xy: tuple, unicode: str):
     with Pilmoji(img) as pilmoji:
         pilmoji.text(emoji_location, unicode, (0, 0, 0), font)
 
-def check_emojify(words_dict, img):
+def check_emojify(words_dict, img, check_glove):
     '''
     Checks words in document to see if an emoji version
     exists and calls replacement function.
@@ -83,7 +84,7 @@ def check_emojify(words_dict, img):
     words_dict = dict containing words and list of 4-tuples
     '''
     for key, val in words_dict.items():
-        emojified = emojify(key)
+        emojified = emojify(key, check_glove)
         if (emojified):
             for v in val:
                 emojify_text(img, v, emojified)
@@ -95,6 +96,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     input_pdf_path = args.path
+    enable_glove = args.glove
 
     pil_images = pdf_to_pil_images(input_pdf_path)
     final_pil_images = []
@@ -102,7 +104,7 @@ if __name__ == "__main__":
     for img in pil_images:
         # final_pil_images.append(img)
         page_info = get_words_and_bounding_boxes(img)
-        final_pil_images.append(check_emojify(page_info, img))
+        final_pil_images.append(check_emojify(page_info, img, enable_glove))
 
     page_one = final_pil_images[0]
     file_name = os.path.basename(input_pdf_path)
