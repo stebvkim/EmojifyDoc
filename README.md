@@ -28,4 +28,4 @@ We use pdf2image to split the input PDF into individual JPG images. We then run 
 
 Note that some emojis show up as boxes. That is funky. Also note that when a word can be represented through multiple emojis, EmojifyDoc will randomly select one. This is not perfect, nor did we intend it to be. In a way, it adds to the fun 😀.
 
-Enjoy!
+Enjoy! 
