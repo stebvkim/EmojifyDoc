@@ -13,6 +13,7 @@ Output Document:
 
 ___
 
+**Be sure to run run_glove_file.py first to utilize GloVe. Otherwise, the default emoji suggestion is used.**
 
 ### How EmojifyDoc works: 
 
